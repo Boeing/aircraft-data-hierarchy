@@ -1,0 +1,52 @@
+[build-system]
+requires = [
+    "setuptools>=45",
+    "setuptools_scm[toml]>=6.2"
+    ]
+build-backend = 'setuptools.build_meta'
+
+[tool.setuptools_scm]
+
+[project]
+name = "aircraft_data_hierarchy"
+description = "Project description"
+readme = "README.md"
+authors = [
+    {name = "Ranald M Engelbeck "},
+    {email = "ranald.m.engelbeck@boeing.com"},
+    {name = "Eduardo Ocampo"},
+]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Copyright :: The Boeing Company",
+    "License :: Apache License Version 2.0",
+]
+dependencies = [
+    "pydantic",
+    "numpy",
+    "graphviz",
+    "tabulate",
+    "IPython"
+]
+
+dynamic = ["version", "scripts"]
+
+# [tool.setuptools.dynamic]
+# version = {attr = "designemypackagexplorer.__version__"}
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "coverage",
+]
+
+[tool.setuptools.packages.find]
+where = ["./src"]
+include = ["aircraft_data_hierarchy*"]
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+minversion = "6.0"
