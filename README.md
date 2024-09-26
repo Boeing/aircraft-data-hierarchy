@@ -50,7 +50,7 @@ conda activate your-environment-name
 cd aircraft-data-hierarchy
 ```
 
-### 5. Install the required packages from the [requirements.adh.txt](requirements.adh.txt) file.
+### 5. Install the required packages from the [requirements.txt](requirements.txt) file.
 
 In some cases `pip` will not be automatically installed when creating the new environment. If that is the case for you, install `pip` using conda.
 
@@ -61,13 +61,13 @@ conda install pip
 Once you have `pip`, install the package dependencies.
 
 ```shell
-pip install -r requirements.adh.txt
+pip install -r requirements.txt
 ```
 
 Alternatively you can install the dependencies specified in the [pyproject.yml](pyproject.yml) file.
 
 ```shell
-pip install .[dependencies]
+pip install .
 ```
 
 This will install all the dependencies specified for the Aircraft Data Hierarchy package.
