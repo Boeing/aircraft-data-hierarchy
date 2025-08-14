@@ -23,18 +23,21 @@ classifiers = [
 ]
 
 dependencies = [
-    "pydantic >= 2.0",
-    "numpy",
+    "pydantic>=2.0",
+    "numpy>=2.0",
     "graphviz",
     "tabulate",
     "IPython"
 ]
 
-dynamic = ["version", "scripts"]
+dynamic = ["version"]
+
+[project.scripts]
+adh-validate-json = "aircraft_data_hierarchy.validate_json:main"
 
 [project.optional-dependencies]
 test = [
-    "pytest",
+    "pytest>=6.0",
     "pytest-cov",
     "coverage",
 ]

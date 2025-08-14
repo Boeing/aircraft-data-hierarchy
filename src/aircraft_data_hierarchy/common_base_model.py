@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional, Union
-from pydantic import BaseModel, Field, field_validator, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 class NodeNotFoundError(Exception):
     """Exception raised when a node is not found in the ADH."""
@@ -311,14 +311,14 @@ class Metadata(CommonBaseModel):
     lower_bounds: Optional[Union[int, float]] = Field(None, description="The lower bounds of the data")
     upper_bounds: Optional[Union[int, float]] = Field(None, description="The upper bounds of the data")
 
-    class Config:
-        """Pydantic configuration for the Metadata model."""
-        validate_assignment = True
-        arbitrary_types_allowed = True
-        extra = "forbid"
-        str_min_length = 1
-        str_max_length = 255
-        str_strip_whitespace = True
+    model_config = ConfigDict(
+        validate_assignment=True,
+        arbitrary_types_allowed=True,
+        extra="forbid",
+        str_min_length=1,
+        str_max_length=255,
+        str_strip_whitespace=True,
+    )
 
     @field_validator('key')
     def key_must_be_non_empty(cls, key: str) -> str:

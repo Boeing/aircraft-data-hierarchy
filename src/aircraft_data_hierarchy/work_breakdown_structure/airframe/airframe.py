@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Dict, Any, List, Optional
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ...common_base_model import CommonBaseModel, Metadata
 from .airframe_geometry import Geometry
@@ -56,11 +56,7 @@ class Component(CommonBaseModel):
         if value is not None and not value.strip():
             raise ValueError("Name and description fields must not be empty or whitespace only.")
         return value
-
-    class Config:
-        """Pydantic model configuration."""
-        arbitrary_types_allowed = True
-        from_attributes = True
+    model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)
 
 # Ensure all models are fully defined
 Component.model_rebuild()

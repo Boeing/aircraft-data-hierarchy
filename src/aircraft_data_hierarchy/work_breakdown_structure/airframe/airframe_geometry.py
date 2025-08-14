@@ -365,7 +365,7 @@ class Spline(BaseModel):
     points: List[Point] = Field(
         ...,
         description="Control points that define the spline.",
-        min_items=2  # Ensuring there's at least two points to define a curve
+        min_length=2  # Ensuring there's at least two points to define a curve
     )
     degree: int = Field(
         default=3,

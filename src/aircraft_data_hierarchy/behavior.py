@@ -293,7 +293,7 @@ class UniformPDF(CommonBaseModel):
         bounds (Optional[List[Bounds]]): The bounds of the distribution.
     """
 
-    bounds: Optional[List[Bounds]] = Field(None, min_items=1, description="The bounds of the distribution")
+    bounds: Optional[List[Bounds]] = Field(None, min_length=1, description="The bounds of the distribution")
 
 
 class Bounds(CommonBaseModel):

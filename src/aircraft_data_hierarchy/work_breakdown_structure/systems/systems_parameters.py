@@ -79,9 +79,9 @@ class PhysicalCharacteristics(BaseModel):
     """
 
     weight: float = Field(..., gt=0)
-    dimensions: Dict[str, float] = Field(..., min_items=3, max_items=3)
+    dimensions: Dict[str, float] = Field(..., min_length=3, max_length=3)
     volume: float = Field(..., gt=0)
-    center_of_gravity: Dict[str, float] = Field(..., min_items=3, max_items=3)
+    center_of_gravity: Dict[str, float] = Field(..., min_length=3, max_length=3)
 
     @field_validator("dimensions")
     @classmethod
@@ -118,7 +118,7 @@ class FluidFlowCharacteristics(BaseModel):
     flow_rate: float = Field(..., gt=0)
     max_pressure: float = Field(..., gt=0)
     min_pressure: float = Field(..., ge=0)
-    temperature_range: Tuple[float, float] = Field(..., min_items=2, max_items=2)
+    temperature_range: Tuple[float, float] = Field(..., min_length=2, max_length=2)
     viscosity: float = Field(..., gt=0)
     density: float = Field(..., gt=0)
 
@@ -206,7 +206,7 @@ class System(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
     type: Literal["System"] = "System"
     attributes: SystemAttributes
-    components: List[str] = Field(..., min_items=1)
+    components: List[str] = Field(..., min_length=1)
 
     @field_validator("type")
     @classmethod
