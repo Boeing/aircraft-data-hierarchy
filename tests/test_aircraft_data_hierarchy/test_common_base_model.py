@@ -71,6 +71,39 @@ class TestCommonBaseModel(unittest.TestCase):
         self.assertEqual(self.model.get_node('root.node1'), {'key': 'value'})
         self.assertEqual(self.model.get_node('root.node2'), {'key': 'value'})
 
+    def test_copy_node_isolates_lists(self):
+        self.model.create_node('root.source', {'loads': [10, 20]})
+        self.model.copy_node('root.source', 'root.target')
+        source = self.model.get_node('root.source')
+        target = self.model.get_node('root.target')
+
+        target['loads'].append(30)
+        self.assertEqual(source['loads'], [10, 20])
+        source['loads'].append(40)
+        self.assertEqual(target['loads'], [10, 20, 30])
+
+    def test_copy_node_isolates_dictionaries_inside_lists(self):
+        self.model.create_node('root.source', {'stations': [{'x': 1.0}]})
+        self.model.copy_node('root.source', 'root.target')
+        source = self.model.get_node('root.source')
+        target = self.model.get_node('root.target')
+
+        target['stations'][0]['x'] = 2.0
+        self.assertEqual(source['stations'][0]['x'], 1.0)
+        source['stations'][0]['x'] = 3.0
+        self.assertEqual(target['stations'][0]['x'], 2.0)
+
+    def test_copy_node_isolates_lists_inside_nested_dictionaries(self):
+        self.model.create_node('root.source', {'wing': {'loads': [10]}})
+        self.model.copy_node('root.source', 'root.target')
+        source = self.model.get_node('root.source')
+        target = self.model.get_node('root.target')
+
+        target['wing']['loads'].append(20)
+        self.assertEqual(source['wing']['loads'], [10])
+        source['wing']['loads'].append(30)
+        self.assertEqual(target['wing']['loads'], [10, 20])
+
     def test_copy_node_non_existent_source(self):
         with self.assertRaises(NodeNotFoundError):
             self.model.copy_node('root.non_existent_node', 'root.node2')

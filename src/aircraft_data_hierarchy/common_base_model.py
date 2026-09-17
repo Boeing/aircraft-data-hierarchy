@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, Field, field_validator, ConfigDict
 
@@ -246,12 +247,7 @@ class CommonBaseModel(BaseModel):
         if self.get_node(target_path) is not None:
             raise PathAlreadyExistsError(f"The target path already exists in the ADH: {target_path}")
 
-        def deep_copy(node):
-            if isinstance(node, dict):
-                return {key: deep_copy(value) for key, value in node.items()}
-            return node
-
-        copied_node = deep_copy(source_node)
+        copied_node = deepcopy(source_node)
         self.create_node(target_path, copied_node)
 
     def link_nodes(self, source_path: str, target_path: str) -> None:
